@@ -1,0 +1,16 @@
+-- Create PRODUCT table
+CREATE TABLE PRODUCT (
+    product_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL CHECK (price > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create INVENTORY table
+CREATE TABLE INVENTORY (
+    inventory_id SERIAL PRIMARY KEY,
+    product_id INT NOT NULL UNIQUE REFERENCES PRODUCT(product_id) ON DELETE CASCADE,
+    quantity INT NOT NULL CHECK (quantity >= 0),
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
